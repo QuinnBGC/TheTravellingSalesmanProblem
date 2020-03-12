@@ -11,9 +11,9 @@ using namespace std;
 
 int cost = 0;
 
-int least(int c, int numCities, int *matrix[], int completed[]) {
-	int i, nc = 999;
-	int min = 999, kmin;
+int min(int c, int numCities, int *matrix[], int completed[]) {
+	int i, nc = 1000000;
+	int min = 1000000, kmin;
 	for (int i = 0; i < numCities; i++) {
 		if ((matrix[c][i] != 0) && completed[i] == 0) {
 			if (matrix[c][i] + matrix[i][c] < min) {
@@ -23,23 +23,23 @@ int least(int c, int numCities, int *matrix[], int completed[]) {
 			}
 		}
 	}
-	if (min != 999) {
+	if (min != 1000000) {
 		cost += kmin;
 	}
 	return nc;
 }
   
-void mincost(int city, int *matrix[], int completed[], int numCities) {
+void tsp(int city, int *matrix[], int completed[], int numCities) {
 	int i, ncity;
 	completed[city] = 1;
-	cout << city +1 << "---->";
-	ncity=least(city, numCities, matrix, completed);
-	if (ncity == 999) {
+	//cout << city +1 << "---->";
+	ncity=min(city, numCities, matrix, completed);
+	if (ncity == 1000000) {
 		ncity=0;
 		cost += matrix[city][ncity];
 		return;
 	}
-	mincost(ncity, matrix, completed, numCities);
+	tsp(ncity, matrix, completed, numCities);
 }
 
 int getDistance(int x[], int y[], int numCities, int i, int j, int *matrix[]) {
@@ -96,7 +96,7 @@ int main(int argc, char* argv[]) {
 	for(int i=0; i<numCities; i++){
         completed[i]=0;
     }
-	mincost(completed[0], matrix, completed, numCities);
+	tsp(completed[0], matrix, completed, numCities);
 	cout << "cost: " <<  cost << endl;
 
 	return 0;
