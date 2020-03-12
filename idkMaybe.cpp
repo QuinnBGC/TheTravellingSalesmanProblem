@@ -93,6 +93,9 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	int completed[numCities];
+	for(int i=0; i<numCities; i++){
+        completed[i]=0;
+    }
 	mincost(completed[0], matrix, completed, numCities);
 	cout << "cost: " <<  cost << endl;
 
